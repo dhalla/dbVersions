@@ -10,8 +10,12 @@
         private $cmd;            
 
         public function __construct(array $params) {    
-        
-            $this->cmd = "mysql ";
+            
+            $action = ($params['mysql'] == 'export') 
+                ? array('cmd' => 'mysqldump', "readwrite" => ">") 
+                : array('cmd' => 'mysql', "readwrite" => "<"); 
+
+            $this->cmd = $action['cmd']." -u ".$params['user']." -p".$params['passwd']." ".$params['dbname']." ".$action['readwrite']." ";
 
         }
         

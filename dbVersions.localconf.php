@@ -10,7 +10,7 @@
  
 define('DATABASE_DBNAME', 'bdew');
 define('DATABASE_USER', 'root');
-define('DATABASE_PASSWORD', 'test');
+define('DATABASE_PASSWD', 'test');
 
 
 
