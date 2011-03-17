@@ -14,14 +14,15 @@
         print("Warning: PHP".PHP_VERSION." installed, longopts not supported. See also http://www.php.net/manual/en/function.getopt.php");
         die();
     } 
+
+    // Options
+    $helptext = "\nUsage: 
+-a : mandatory, can be 'import' or 'export'
+-d : dry-run, only display output
+-h : display help
+-c : path to local configuration file with database parameters, if not set dbVersions.localconf.php will be used\n\n";
     
-    /**
-     * Options:
-     * -a can be 'import' or 'export'
-     * -h display help
-     * -c path to local configuration file with database parameters
-     */
-    $shortopts  = "a:c::h";
+    $shortopts  = "a:c::hd";
     $options = getopt($shortopts);
         
     $db = new dbVersion(array(
@@ -31,8 +32,23 @@
         'action'    => $options['a']
     ));
     
+    // Show Help and exit (or use if mandatory parameter 'a' has not been set)   
+    if (array_key_exists('h', $options) OR !array_key_exists('a', $options) ) {
+        print $helptext;
+        exit();
+    }
+
+    // Dry Run
+    if (array_key_exists('d', $options))  {
+        print "Dry-Run: \n". $db ."\n";    
+    }
     
-    echo $db."\n";
+    
+    
+    
+    
+
+
     
     
 
